@@ -1,7 +1,20 @@
-import React from "react";
+import React,{useState} from "react";
 import Search from "./Search";
 
-function Header() {
+function Header({setFilter,searchBar,newPost}) {
+  const [des, setDes] = useState('');
+  const [img, setImg] = useState('');
+  const [loc, setLoc] = useState('');
+  
+  function test(e){
+    e.preventDefault();
+    const netPost={
+      description: des,
+      image: img,
+      location: loc
+    }
+    newPost(netPost)
+  }
   return (
     <header>
       <h1>
@@ -10,7 +23,15 @@ function Header() {
         </span>
         gregslist
       </h1>
-      <Search />
+      <Search 
+      searchbar={searchBar}
+      setFilter={setFilter}/>
+      <form onSubmit={test}>
+        <input onChange={(e) => setDes(e.target.value)}placeholder={"Description"}></input>
+        <input onChange={(e) => setImg(e.target.value)}placeholder={"ImageSrc"}></input>
+        <input onChange={(e) => setLoc(e.target.value)}placeholder={"Location"}></input>
+        <button type='submit'>CLICKIT to POST</button>
+      </form>
     </header>
   );
 }
